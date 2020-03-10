@@ -1,0 +1,11 @@
+body {
+    padding-top: 3em;
+}
+
+body > div:first-of-type { 
+    max-width: 50em;
+ }
+
+ #add-album {
+     margin-top: 1em;
+ }
