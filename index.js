@@ -1,8 +1,8 @@
 var searchInput = document.getElementById("search");
-var albums = document.querySelectorAll('#albums-list li');
 
 searchInput.addEventListener('input', function() {
     let searchPhrase = searchInput.value.toUpperCase();
+    let albums = document.querySelectorAll('#albums-list li');
 
     albums.forEach(function (item) {
         if (searchPhrase === '' || item.innerHTML.toUpperCase().includes(searchPhrase)) {
@@ -23,6 +23,8 @@ addAlbum.addEventListener('click', function() {
     liAlbum.appendChild(document.createTextNode(newAlbum.value));
     liAlbum.setAttribute('class', 'list-group-item');
     ulAlbums.appendChild(liAlbum);
+
+    newAlbum.value = '';
 });
 
 newAlbum.addEventListener('keyup', function(event) {
