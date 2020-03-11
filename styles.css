@@ -9,3 +9,7 @@ body > div:first-of-type {
  #add-album {
      margin-top: 1em;
  }
+
+ #albums-list {
+     margin-top: 1em;
+ }
