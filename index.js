@@ -22,6 +22,7 @@ addAlbum.addEventListener('click', function() {
 
     liAlbum.appendChild(document.createTextNode(newAlbum.value));
     liAlbum.setAttribute('class', 'list-group-item');
+    liAlbum.setAttribute('draggable', 'true');
     ulAlbums.appendChild(liAlbum);
 
     newAlbum.value = '';
@@ -61,3 +62,34 @@ function sortAlbums(ascending) {
         ulAlbums.appendChild(item);
     })
 }
+
+// DRAG AND DROP
+var movingElement;
+
+function onDragStart(event) {
+    this.style.opacity = '0.4';
+    movingElement = this;
+    event.dataTransfer.setData('text/html', this.innerHTML);
+}
+
+function onDragOver(event) {
+    event.preventDefault();
+}
+
+function onDrop(event) {
+    if (movingElement != this) {
+        movingElement.innerHTML = this.innerHTML;
+        this.innerHTML = event.dataTransfer.getData('text/html');
+    }
+}
+
+function onDragEnd(event) {
+    this.style.opacity = '1';
+}
+
+document.querySelectorAll('#albums-list li').forEach((item) => {
+    item.addEventListener('dragstart', onDragStart);
+    item.addEventListener('dragover', onDragOver);
+    item.addEventListener('drop', onDrop);
+    item.addEventListener('dragend', onDragEnd);
+})
