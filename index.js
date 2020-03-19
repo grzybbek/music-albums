@@ -1,3 +1,5 @@
+'use strict';
+
 var searchInput = document.getElementById("search");
 
 searchInput.addEventListener('input', function() {
@@ -64,32 +66,56 @@ function sortAlbums(ascending) {
 }
 
 // DRAG AND DROP
-var movingElement;
+var movingElement = null;
 
 function onDragStart(event) {
     this.style.opacity = '0.4';
+    this.classList.add('dragElem');
     movingElement = this;
-    event.dataTransfer.setData('text/html', this.innerHTML);
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('text/html', this.outerHTML);
 }
 
 function onDragOver(event) {
     event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+    return false;
+}
+
+function onDragLeave(event) {
 }
 
 function onDrop(event) {
+    event.stopPropagation();
+
     if (movingElement != this) {
-        movingElement.innerHTML = this.innerHTML;
-        this.innerHTML = event.dataTransfer.getData('text/html');
+        // movingElement.innerHTML = this.innerHTML;
+        // this.innerHTML = event.dataTransfer.getData('text/html');
+        this.parentNode.removeChild(movingElement);
+
+        this.insertAdjacentHTML('beforebegin', event.dataTransfer.getData('text/html'));
+        
+        addListeners(this.previousSibling);
     }
+
+    return false;
 }
 
 function onDragEnd(event) {
-    this.style.opacity = '1';
+    console.log(this.style.opacity);
+    this.style.opacity = '1.0';
+    this.classList.remove('dragElem');
+    console.log(this.style.opacity);
 }
 
 document.querySelectorAll('#albums-list li').forEach((item) => {
+    addListeners(item);
+})
+
+function addListeners(item) {
     item.addEventListener('dragstart', onDragStart);
     item.addEventListener('dragover', onDragOver);
+    item.addEventListener('dragleave', onDragLeave);
     item.addEventListener('drop', onDrop);
     item.addEventListener('dragend', onDragEnd);
-})
+}
