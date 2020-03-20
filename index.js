@@ -1,5 +1,42 @@
 'use strict';
 
+class Album {
+    constructor(artist, title) {
+        this.artist = artist;
+        this.title = title;
+    }
+}
+
+var albumsTexts = [
+    new Album('Flaming Lips', 'Yoshimi Battles the Pink Robots'),
+    new Album('Wilco', 'Yankee Hotel Foxtrot'),
+    new Album('Interpol', 'Turn On the Bright Lights'),
+    new Album('Nelly Furtado', 'Whoa, Nelly!'),
+    new Album('Drake', 'Views')
+];
+
+var ulAlbums = document.getElementById("albums-list");
+
+albumsTexts.forEach((album) => {
+    ulAlbums.appendChild(creeateLiAlbum(`${album.artist} - ${album.title}`))
+});
+
+function creeateLiAlbum(albumValue) {
+    let liAlbum = document.createElement("li");
+    liAlbum.setAttribute('class', 'list-group-item');
+    liAlbum.setAttribute('draggable', 'true');
+
+    let icon = document.createElement("i");
+    icon.setAttribute('class', 'fas fa-ellipsis-v');
+    liAlbum.appendChild(icon);
+
+    let textSpan = document.createElement("span");
+    textSpan.appendChild(document.createTextNode(albumValue));
+    liAlbum.appendChild(textSpan);
+
+    return liAlbum;
+}
+
 var searchInput = document.getElementById("search");
 
 searchInput.addEventListener('input', function() {
@@ -17,15 +54,9 @@ searchInput.addEventListener('input', function() {
 
 var addAlbum = document.getElementById("add-album");
 var newAlbum = document.getElementById("new-album");
-var ulAlbums = document.getElementById("albums-list");
 
 addAlbum.addEventListener('click', function() {
-    let liAlbum = document.createElement("li");
-
-    liAlbum.appendChild(document.createTextNode(newAlbum.value));
-    liAlbum.setAttribute('class', 'list-group-item');
-    liAlbum.setAttribute('draggable', 'true');
-    ulAlbums.appendChild(liAlbum);
+    ulAlbums.appendChild(creeateLiAlbum(newAlbum.value));
 
     newAlbum.value = '';
 });
