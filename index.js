@@ -18,10 +18,10 @@ var albumsTexts = [
 var ulAlbums = document.getElementById("albums-list");
 
 albumsTexts.forEach((album) => {
-    ulAlbums.appendChild(creeateLiAlbum(`${album.artist} - ${album.title}`))
+    ulAlbums.appendChild(createLiAlbum(album))
 });
 
-function creeateLiAlbum(albumValue) {
+function createLiAlbum(album) {
     let liAlbum = document.createElement("li");
     liAlbum.setAttribute('class', 'list-group-item');
     liAlbum.setAttribute('draggable', 'true');
@@ -31,7 +31,7 @@ function creeateLiAlbum(albumValue) {
     liAlbum.appendChild(icon);
 
     let textSpan = document.createElement("span");
-    textSpan.appendChild(document.createTextNode(albumValue));
+    textSpan.appendChild(document.createTextNode(`${album.artist} - ${album.title}`));
     liAlbum.appendChild(textSpan);
 
     return liAlbum;
@@ -53,19 +53,23 @@ searchInput.addEventListener('input', function() {
 });
 
 var addAlbum = document.getElementById("add-album");
-var newAlbum = document.getElementById("new-album");
+var newAlbumArtist = document.getElementById("artist");
+var newAlbumTitle = document.getElementById("title");
 
 addAlbum.addEventListener('click', function() {
-    ulAlbums.appendChild(creeateLiAlbum(newAlbum.value));
+    ulAlbums.appendChild(createLiAlbum(new Album(newAlbumArtist.value, newAlbumTitle.value)));
 
-    newAlbum.value = '';
+    newAlbumArtist.value = '';
+    newAlbumTitle.value = '';
 });
 
-newAlbum.addEventListener('keyup', function(event) {
-    if (event.keyCode === 13) {
-        event.preventDefault();
-        addAlbum.click();
-    }
+document.querySelectorAll("#new-album input").forEach((input) => {
+    input.addEventListener('keyup', function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            addAlbum.click();
+        }
+    });
 });
 
 var azSort = document.getElementById("azSort");

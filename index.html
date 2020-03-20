@@ -26,7 +26,14 @@
             </div>
             <div class="form-group">
                 <label for="new-album">Add new album</label>
-                <input type="text" class="form-control" id="new-album">
+                <div class="row" id="new-album">
+                    <div class="col">
+                        <input type="text" class="form-control" id="artist" placeholder="Artist">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" id="title" placeholder="Title">
+                    </div>
+                </div>
                 <button type="button" class="btn btn-primary" id="add-album">Add new album</button>
             </div>
             <div class="btn-group" role="group" aria-label="Sorting">
@@ -35,7 +42,7 @@
             </div>
             <div class="form-group">
                 <ul class="list-group" id="albums-list">
-                    
+
                 </ul>
             </div>
         </form>
