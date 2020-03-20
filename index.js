@@ -69,43 +69,46 @@ function sortAlbums(ascending) {
 var movingElement = null;
 
 function onDragStart(event) {
-    this.style.opacity = '0.4';
-    this.classList.add('dragElem');
     movingElement = this;
     event.dataTransfer.effectAllowed = 'move';
     event.dataTransfer.setData('text/html', this.outerHTML);
+    this.classList.add('moving-el');
 }
 
 function onDragOver(event) {
-    event.preventDefault();
+    if (event.preventDefault) {
+        event.preventDefault();
+    }
     event.dataTransfer.dropEffect = 'move';
+    this.classList.add('over');
     return false;
 }
 
 function onDragLeave(event) {
+    this.classList.remove('over');
 }
 
 function onDrop(event) {
-    event.stopPropagation();
+    if (event.stopPropagation) {
+        event.stopPropagation();
+    }
 
     if (movingElement != this) {
-        // movingElement.innerHTML = this.innerHTML;
-        // this.innerHTML = event.dataTransfer.getData('text/html');
         this.parentNode.removeChild(movingElement);
 
         this.insertAdjacentHTML('beforebegin', event.dataTransfer.getData('text/html'));
         
         addListeners(this.previousSibling);
     }
+    this.classList.remove('moving-el');
+    this.classList.remove('over');
 
     return false;
 }
 
 function onDragEnd(event) {
-    console.log(this.style.opacity);
-    this.style.opacity = '1.0';
-    this.classList.remove('dragElem');
-    console.log(this.style.opacity);
+    this.classList.remove('moving-el');
+    this.classList.remove('over');
 }
 
 document.querySelectorAll('#albums-list li').forEach((item) => {

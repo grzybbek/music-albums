@@ -13,3 +13,19 @@ body > div:first-of-type {
  #albums-list {
      margin-top: 1em;
  }
+
+ .moving-el {
+     opacity: 0.4;
+ }
+
+ .over {
+    background-color: #dfeeff;
+ }
+
+ .fa-ellipsis-v {
+     margin-right: 0.8em;
+ }
+
+ #albums-list li {
+    cursor: move;
+ }
