@@ -5,6 +5,10 @@ class Album {
         this.artist = artist;
         this.title = title;
     }
+
+    toString() {
+        return `${this.artist} - ${this.title}`;
+    }
 }
 
 var albumsTexts = [
@@ -15,10 +19,18 @@ var albumsTexts = [
     new Album('Drake', 'Views')
 ];
 
+const albumsUrl = "https://my-json-server.typicode.com/grzybbek/music-albums/albums";
+
 var ulAlbums = document.getElementById("albums-list");
 
-albumsTexts.forEach((album) => {
-    ulAlbums.appendChild(createLiAlbum(album))
+fetch(albumsUrl)
+.then(response => response.json())
+.then(albums => {
+    albums.forEach(album => {
+        let liAlbum = createLiAlbum(new Album(album.artist, album.title));
+        addListeners(liAlbum);
+        ulAlbums.appendChild(liAlbum);        
+    })
 });
 
 function createLiAlbum(album) {
@@ -31,7 +43,7 @@ function createLiAlbum(album) {
     liAlbum.appendChild(icon);
 
     let textSpan = document.createElement("span");
-    textSpan.appendChild(document.createTextNode(`${album.artist} - ${album.title}`));
+    textSpan.appendChild(document.createTextNode(album.toString()));
     liAlbum.appendChild(textSpan);
 
     return liAlbum;
@@ -145,10 +157,6 @@ function onDragEnd(event) {
     this.classList.remove('moving-el');
     this.classList.remove('over');
 }
-
-document.querySelectorAll('#albums-list li').forEach((item) => {
-    addListeners(item);
-})
 
 function addListeners(item) {
     item.addEventListener('dragstart', onDragStart);
