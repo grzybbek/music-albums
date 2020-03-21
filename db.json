@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "artist": "Flaming Lips",
+        "title": "Yoshimi Battles the Pink Robots"
+    },
+    {
+        "id": 2,
+        "artist": "Wilco",
+        "title": "Yankee Hotel Foxtrot"
+    },
+    {
+        "id": 3,
+        "artist": "Interpol",
+        "title": "Turn On the Bright Lights"
+    },
+    {
+        "id": 4,
+        "artist": "Nelly Furtado",
+        "title": "Whoa, Nelly!"
+    },
+    {
+        "id": 5,
+        "artist": "Drake",
+        "title": "Views"
+    }
+]
